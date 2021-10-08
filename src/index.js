@@ -3,12 +3,15 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ContextProvider } from './context/Context';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ContextProvider>
+      <App />
+    </ContextProvider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root') //from inswx.html in public folder
 );
 
 // If you want to start measuring performance in your app, pass a function

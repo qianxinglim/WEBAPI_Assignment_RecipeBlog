@@ -1,0 +1,133 @@
+POST http://localhost:5000/auth/signup
+Content-Type: application/json
+
+{
+    "fullName" : "RoyGee",
+    "username" : "roygee",
+    "email" : "Roy@gmail.com",
+    "password" : "roy123"
+}
+
+###
+
+POST http://localhost:5000/auth/signin
+Content-Type: application/json
+
+{
+    "email" : "yoshi@gmail.com",
+    "password" : "yoshi123"
+}
+
+###
+
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+    "email" : "yoshi@gmail.com",
+    "password" : "yoshi1234"
+}
+
+###
+
+PUT http://localhost:5000/user/6159d2b3abde414a5f97ab2a
+Content-Type: application/json
+
+{
+    "userId" : "6159cdb8ed5e46fc6ca554cd",
+    "email" : "yoshi@gmail.com",
+    "password" : "yoshi123"
+}
+
+###
+
+DELETE http://localhost:5000/user/6159d2b3abde414a5f97ab2a
+Content-Type: application/json
+
+{
+    "userId" : "6159d2b3abde414a5f97ab2a",
+    "email" : "yoshi@gmail.com",
+    "password" : "yoshi123"
+}
+
+###
+
+GET http://localhost:5000/user/6158561db494b266d1b03aa4
+Content-Type: application/json
+
+{
+    "userId" : "6158561db494b266d1b03aa4",
+    "email" : "yoshi@gmail.com",
+    "password" : "yoshi123"
+}
+
+###
+
+POST http://localhost:5000/post/add
+Content-Type: application/json
+
+{
+    "recipeId" : "52795",
+    "title" : "Chicken Handi",
+    "instructions" : "Take a large pot or wok, big enough to cook all the chicken, and heat the oil in it. Once the oil is hot, add sliced onion and fry them until deep golden brown. Then take them out on a plate and set aside.\r\nTo the same pot, add the chopped garlic and sauté for a minute. Then add the chopped tomatoes and cook until tomatoes turn soft. This would take about 5 minutes.\r\nThen return the fried onion to the pot and stir. Add ginger paste and sauté well.\r\nNow add the cumin seeds, half of the coriander seeds and chopped green chillies. Give them a quick stir.\r\nNext goes in the spices – turmeric powder and red chilli powder. Sauté the spices well for couple of minutes.\r\nAdd the chicken pieces to the wok, season it with salt to taste and cook the chicken covered on medium-low heat until the chicken is almost cooked through. This would take about 15 minutes. Slowly sautéing the chicken will enhance the flavor, so do not expedite this step by putting it on high heat.\r\nWhen the oil separates from the spices, add the beaten yogurt keeping the heat on lowest so that the yogurt doesn’t split. Sprinkle the remaining coriander seeds and add half of the dried fenugreek leaves. Mix well.\r\nFinally add the cream and give a final mix to combine everything well.\r\nSprinkle the remaining kasuri methi and garam masala and serve the chicken handi hot with naan or rotis. Enjoy!",
+    "image" : "https://www.themealdb.com/images/media/meals/wyxwsp1486979827.jpg",
+    "category" : "Chicken",
+    "area" : "Indian",
+    "ingredients" : ["Chicken", "Onion","Tomatoes", "Garlic", "Ginger Paste", "Vegetable oil", "Cumin seeds"],
+    "measurement" : ["1.2 kg", "5 thinly sliced","2 finely chopped", "8 cloves chopped", "1 tbsp", "¼ cup", "2 tsp"],
+    "userId" : "6158561db494b266d1b03aa4"
+}
+
+###
+
+GET http://localhost:5000/post/615a0afdc6494d93a70a77aa
+Content-Type: application/json
+
+{
+
+}
+
+###
+
+DELETE http://localhost:5000/post/615a0c1bc6494d93a70a77b4
+Content-Type: application/json
+
+{
+    "userId" : "6158561db494b266d1b03aa4"
+}
+
+###
+
+GET http://localhost:5000/post
+Content-Type: application/json
+
+{
+    
+}
+
+###
+
+GET http://localhost:5000/post/52901
+Content-Type: application/json
+
+{
+    
+}
+
+###
+
+GET http://localhost:5000/post/?category=Vegan
+Content-Type: application/json
+
+{
+    
+}
+
+###
+
+GET http://localhost:5000/post/?search=Chicken
+Content-Type: application/json
+
+{
+    
+}
