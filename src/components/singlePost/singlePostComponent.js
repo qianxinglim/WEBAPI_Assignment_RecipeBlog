@@ -1,23 +1,56 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useLocation } from "react-router";
 import axios from "axios";
 import "./singlePostComponent.css"
+import { Context } from "../../context/Context";
 
 export default function SinglePost() {
   const location = useLocation();
   const path = location.pathname.split("/")[2];
   const [post, setPost] = useState({})
+  const [favourited, setFavourited] = useState(false);
+  const {user} = useContext(Context)
 
   useEffect(() => {
     const getPost = async () =>{
-      const res = await axios.get("http://localhost:5000/post/" + path);
+      //const res = await axios.get("http://localhost:5000/post/" + path);
+      const res = await axios.post("http://localhost:5000/post/" + path,{
+        userId: user._id,
+      });
+
       //const res = await axios.get("https://themealdb.com/api/json/v1/1/search.php?s=chicken");
       setPost(res.data);
+
+      if(res.data.favourited == true){
+        setFavourited(true);
+      }
+      else{
+        setFavourited(false);
+      }
+
       console.log(res.data);
     };
 
     getPost()
   },[path]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if(favourited){
+      setFavourited(false);
+    }
+    else{
+      setFavourited(true);
+    }
+
+    const fav = {
+      userId: user._id,
+      recipeId: post.idMeal
+    }
+
+    axios.post("http://localhost:5000/post/add", fav);
+  }
 
     return (
       <div className="singlePost">
@@ -25,7 +58,15 @@ export default function SinglePost() {
           {post.strMealThumb && (
             <img src={post.strMealThumb} alt="" className="singlePostImg"/>
           )}
-            <h1 className="singlePostTitle">{post.strMeal}</h1>
+
+            <form className="" onSubmit={handleSubmit}>
+              <div className="singlePostTitleBar">
+                <div className="singlePostTitleIcon"></div>
+                <h1 className="singlePostTitle">{post.strMeal}</h1>
+                <button  className="singlePostTitleIcon" type="submit">{favourited == true && (<i class="fas fa-heart iconfav"></i>)}{favourited == false && (<i class="far fa-heart"></i>)}</button>
+              </div>
+            </form>
+
 
             <div className="singlePostInfo">
                 <span className="singlePostDate">{post.strArea} Cuisine</span>
@@ -157,6 +198,18 @@ export default function SinglePost() {
             {post.strIngredient20 && (
             <p className="singlePostIn">
               {post.strIngredient20} - {post.strMeasure20}
+            </p>
+            )}
+
+            {post.favourited == true && (
+            <p className="singlePostIn">
+              Favourited
+            </p>
+            )}
+
+            {post.favourited == false && (
+            <p className="singlePostIn">
+              Unfavourited
             </p>
             )}
 

@@ -1,9 +1,10 @@
 import {Link} from 'react-router-dom';
 import "./navbarComponent.css";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Context } from "../../context/Context";
 
 export default function Navbar(){
+  const [keyword, setKeyword] = useState("");
   const {user, dispatch} = useContext(Context);
 
   const handleLogout = () => {
@@ -13,10 +14,21 @@ export default function Navbar(){
     return (
         <div className="top">
           <div className="topLeft">
-            <i className="topIcon fab fa-facebook-square"></i>
+            {/* <i className="topIcon fab fa-facebook-square"></i>
             <i className="topIcon fab fa-twitter-square"></i>
             <i className="topIcon fab fa-pinterest-square"></i>
-            <i className="topIcon fab fa-instagram-square"></i>
+            <i className="topIcon fab fa-instagram-square"></i> */}
+
+            <ul className="topList">
+              <li className="topListItem2">
+                <input className="searchInput" type="text" placeholder="Search..." onChange={e=>setKeyword(e.target.value)}/>
+              </li>
+
+              <li className="topListItem">
+              <Link to={`/?search=${keyword}`} className="link topSearchIcon fa fa-search"></Link>
+                {/* <button className="topSearchIcon fa fa-search" type="submit"></button> */}
+              </li>
+            </ul>
           </div>
           <div className="topCenter">
             <ul className="topList">
@@ -30,18 +42,18 @@ export default function Navbar(){
                   FAVOURITES
                 </Link>
               </li>
-              <li className="topListItem">
+              {/* <li className="topListItem">
                 <Link className="link" to="/">
                   ABOUT
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
           <div className="topRight">
             {user ? (
               <ul className="topList">
                 <li className="topListItem">
-                  <Link className="link" to="/setting">
+                  <Link className="link" to="/profile">
                     PROFILE
                   </Link>
                 </li>
@@ -76,7 +88,10 @@ export default function Navbar(){
                   </Link>
                 </li>
               </ul> */}
-            <i className="topSearchIcon fa fa-search"></i>
+
+              
+
+            {/* <i className="topSearchIcon fa fa-search"></i> */}
           </div>
         </div>
     );

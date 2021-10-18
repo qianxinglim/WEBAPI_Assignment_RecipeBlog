@@ -107,7 +107,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:5000/post/52901
+GET http://localhost:5000/post/52959
 Content-Type: application/json
 
 {
@@ -116,7 +116,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:5000/post/?category=Vegan
+GET http://localhost:5000/post/?category=Beef
 Content-Type: application/json
 
 {
@@ -131,3 +131,57 @@ Content-Type: application/json
 {
     
 }
+
+###
+
+POST http://localhost:5000/post/add
+Content-Type: application/json
+
+{
+    "recipeId" : "52795",
+    "userId" : "6158561db494b266d1b03aa4"
+}
+
+###
+
+POST http://localhost:5000/auth/register
+Content-Type: application/json
+
+{
+    "fullName" : "Yuki",
+    "email" : "yuki@gmail.com",
+    "password" : "yuki123"
+}
+
+###
+
+GET http://localhost:5000/post/?search=Goat
+Content-Type: application/json
+
+{
+  
+}
+
+###
+
+POST http://localhost:5000/post/favourite
+Content-Type: application/json
+
+{
+    "userId" : "6158561db494b266d1b03aa4"
+}
+
+###
+
+PUT http://localhost:5000/user/6158561db494b266d1b03aa4
+Content-Type: application/json
+
+{
+    "userId" : "6158561db494b266d1b03aa4",
+    "fullName" : "Yoshi2",
+    "email" : "yoshi@gmail.com",
+    "oldPassword" : "yoshi123",
+    "password" : "yoshi1123"
+}
+
+

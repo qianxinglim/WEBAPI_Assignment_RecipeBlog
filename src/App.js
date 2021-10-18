@@ -25,7 +25,7 @@ function App() {
           <Route path="/favourite"> {user ? <Favourite/> : <Login/>} </Route>
           <Route path="/login"> {user ? <Home/> : <Login/>} </Route>
           <Route path="/register"> {user ? <Home/> : <Register/>} </Route>
-          <Route path="/setting"> {user ? <Setting/> : <Login/>} </Route>
+          <Route path="/profile"> {user ? <Setting/> : <Login/>} </Route>
           <Route path="/post/:postId"> <Single/> </Route>
 
           <Route path="/signin"> <Signin/> </Route>

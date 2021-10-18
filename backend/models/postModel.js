@@ -8,32 +8,32 @@ const postSchema = new Schema(
             type: String, 
             required: true
         },
-        title:{
-            type: String, 
-            required: true
-        },
-        instructions:{
-            type: String, 
-            required: true
-        },
-        image:{
-            type: String, 
-            required: true
-        },
-        category:{
-            type: String, 
-            required: true
-        },
-        area:{
-            type: String, 
-            required: true
-        },
-        ingredients:[
-            {type: String}
-        ],
-        measurement:[
-            {type: String}
-        ],
+        // title:{
+        //     type: String, 
+        //     required: true
+        // },
+        // instructions:{
+        //     type: String, 
+        //     required: true
+        // },
+        // image:{
+        //     type: String, 
+        //     required: true
+        // },
+        // category:{
+        //     type: String, 
+        //     required: true
+        // },
+        // area:{
+        //     type: String, 
+        //     required: true
+        // },
+        // ingredients:[
+        //     {type: String}
+        // ],
+        // measurement:[
+        //     {type: String}
+        // ],
         userId:{
             type: String, 
             required: true

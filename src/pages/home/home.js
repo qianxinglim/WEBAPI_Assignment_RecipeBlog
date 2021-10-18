@@ -1,19 +1,41 @@
-import { Component, useEffect, useState } from "react";
+import { Component, useEffect, useState, useContext } from "react";
 import axios from "axios";
 import Header from "../../components/header/headerComponent";
 import Posts from "../../components/posts/postsComponent";
 import Sidebar from "../../components/sidebar/sidebarComponent";
 import "./home.css"
 import { useLocation } from "react-router";
+import { Context } from "../../context/Context";
 
 export default function Home (){
     const [posts, setPosts] = useState([]);
     const {search} = useLocation();
+    const {user} = useContext(Context);
 
     useEffect(() => {
         const fetchPosts = async () => {
             const res = await axios.get("http://localhost:5000/post" + search);
+
+            // const res = await axios.post("http://localhost:5000/post",{
+            //     userId: user._id,
+            // });
             setPosts(res.data);
+
+            // let firstResult = await axios.get("http://localhost:5000/post" + search);
+
+            // let updatedResult = firstResult.data.map(async item => {
+            //     const fav = {
+            //         userId: user._id,
+            //         recipeId: item.idMeal
+            //     }
+
+            //     let post = await axios.post("http://localhost:5000/post/check", fav);
+
+            //     item.favourited = post;
+            //     return item;
+            // });
+
+            // Promise.all(updatedResult).then(finalResult => setPosts(finalResult));
         };
 
         fetchPosts();
@@ -85,7 +107,9 @@ export default function Home (){
                 <Header/>
                 <div className="home">
                     <Posts posts={posts}/>
-                    <Sidebar/>
+                    <div className="sidebar sidebar-home">
+                        <Sidebar/>
+                    </div>
                 </div>
             </>
         );

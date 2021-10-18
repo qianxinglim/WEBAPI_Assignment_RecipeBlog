@@ -4,6 +4,18 @@ let Post = require('../models/postModel');
 
 //ADD TO FAV
 router.post('/add', async (req, res) => {
+  const post = await Post.findOne({ userId: req.body.userId, recipeId: req.body.recipeId});
+  
+  if(post){
+    //res.status(400).json("Post exists");
+    try {
+      const savedPost = await Post.deleteOne({userId: req.body.userId, recipeId: req.body.recipeId});
+      res.status(200).json(savedPost);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  }
+  else{
     const newPost = new Post(req.body);
     try {
       const savedPost = await newPost.save();
@@ -11,6 +23,7 @@ router.post('/add', async (req, res) => {
     } catch (err) {
       res.status(500).json(err);
     }
+  }
 });
 
 //GET FAV
@@ -41,27 +54,6 @@ router.delete("/:id", async (req, res) => {
       res.status(500).json(err);
     }
 });
-
-//SEARCH
-// router.post('/search', async (req, res) => {
-//     const query = req.body.query;
-
-//     const querystr = `https://themealdb.com/api/json/v1/1/search.php?s=${query}`;
-
-//     // const search = req.query.search;
-
-//     // const querystr = `https://themealdb.com/api/json/v1/1/search.php?s=${search}`;
-
-//     // axios.get(querystr).then((response) => {
-
-//     //     for(response.data.results){
-//     //         title = response.data.results[0].strMeal;
-//     //         image = response.data.results[0].strMealThumb;
-//     //         category = response.data.results[0].strCategory; 
-//     //         area = response.data.results[0].strArea; 
-//     //     }
-//     // });
-// });
 
 // router.get('/', async (req, res) => {
 //   const area = req.query.area;
@@ -112,10 +104,51 @@ router.delete("/:id", async (req, res) => {
 // });
 
 //GET ALL POST
+// router.post('/', async (req, res) => {
+//   const area = req.query.area;
+//   const search = req.query.search; 
+//   const category = req.query.category; 
+//   const userId = req.body.userId;
+
+//   try{
+//     // await axios.get(
+//     //   "https://themealdb.com/api/json/v1/1/search.php?s=Beef"
+//     // ).then((response) => {
+//     //     res.json(response.data.meals);
+//     // });
+      
+      
+//     let firstResult = await axios.get("https://themealdb.com/api/json/v1/1/search.php?s=Beef");
+
+//     let updatedResult = firstResult.data.meals.map(async item => {
+//       const post = await Post.findOne({ userId: userId, recipeId: item.idMeal});
+        
+//         if(post){
+//           item.favourited = true;
+//         }
+//         else{
+//           item.favourited = false;
+//         }
+
+//         return item;
+//     });
+
+//     Promise.all(updatedResult).then(finalResult => res.json(finalResult));
+          
+    
+//   }
+//   catch(err){
+//     res.status(500).json(err);
+//   }
+// });
+
+
+//GET ALL POST
 router.get('/', async (req, res) => {
   const area = req.query.area;
   const search = req.query.search; 
   const category = req.query.category; 
+  //const userId = req.body.userId;
 
   try{
     
@@ -154,6 +187,24 @@ router.get('/', async (req, res) => {
       ).then((response) => {
           res.json(response.data.meals);
       });
+
+
+      // let firstResult = await axios.get("https://themealdb.com/api/json/v1/1/search.php?s=Beef");
+
+      // let updatedResult = firstResult.data.meals.map(async item => {
+      //   const post = await Post.findOne({ userId: userId, recipeId: item.idMeal});
+          
+      //     if(post){
+      //       item.favourited = true;
+      //     }
+      //     else{
+      //       item.favourited = false;
+      //     }
+
+      //     return item;
+      // });
+
+      // Promise.all(updatedResult).then(finalResult => res.json(finalResult));
     }
   }
   catch(err){
@@ -161,17 +212,50 @@ router.get('/', async (req, res) => {
   }
 });
 
-//GET SPECIFIC POST
-router.get("/:id", async (req, res) => {
-  const idMeal = req.params.id;
+//GET FAV POST
+router.post('/favourite', async (req, res) => {
+  let firstResult = await Post.find({userId: req.body.userId});
+  // firstResult && res.json(firstResult);
 
-  await axios.get(
-    `https://themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`
-  ).then((response) => {
-    res.json(response.data.meals[0]);
-  }).catch((error) => {
-    res.status(500).json(error);
+  let updatedResult = firstResult.map(async item => {
+    let meal = await axios.get('https://themealdb.com/api/json/v1/1/lookup.php?i=' + item.recipeId);
+
+    return meal.data.meals[0]; 
   });
+
+  Promise.all(updatedResult).then(finalResult => res.json(finalResult));
+});
+
+//GET SPECIFIC POST
+router.post("/:id", async (req, res) => {
+  const idMeal = req.params.id;
+  const userId = req.body.userId;
+
+  // await axios.get(
+  //   `https://themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`
+  // ).then((response) => {
+  //   res.json(response.data.meals[0]);
+  // }).catch((error) => {
+  //   res.status(500).json(error);
+  // });
+
+  let firstResult = await axios.get(`https://themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`);
+
+  let updatedResult = firstResult.data.meals.map(async item => {
+    const post = await Post.findOne({ userId: userId, recipeId: idMeal});
+      
+      if(post){
+        item.favourited = true;
+      }
+      else{
+        item.favourited = false;
+      }
+
+      return item;
+  });
+
+  Promise.all(updatedResult).then(finalResult => res.json(finalResult[0]));
+
 
   // await axios.get(
   //   "https://themealdb.com/api/json/v1/1/search.php?s=chicken"
