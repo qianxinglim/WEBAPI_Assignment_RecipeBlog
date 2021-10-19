@@ -3,6 +3,7 @@ import { useLocation } from "react-router";
 import axios from "axios";
 import "./singlePostComponent.css"
 import { Context } from "../../context/Context";
+import Login from "../../pages/login/login";
 
 export default function SinglePost() {
   const location = useLocation();
@@ -14,21 +15,30 @@ export default function SinglePost() {
   useEffect(() => {
     const getPost = async () =>{
       //const res = await axios.get("http://localhost:5000/post/" + path);
-      const res = await axios.post("http://localhost:5000/post/" + path,{
-        userId: user._id,
-      });
 
-      //const res = await axios.get("https://themealdb.com/api/json/v1/1/search.php?s=chicken");
-      setPost(res.data);
+      if(user){
+        const res = await axios.post("http://localhost:5000/post/" + path,{
+          userId: user._id,
+        });
 
-      if(res.data.favourited == true){
-        setFavourited(true);
+        setPost(res.data);
+
+        if(res.data.favourited == true){
+          setFavourited(true);
+        }
+        else{
+          setFavourited(false);
+        }
       }
       else{
+        const res = await axios.post("http://localhost:5000/post/" + path);
+
+        setPost(res.data);
+
         setFavourited(false);
       }
 
-      console.log(res.data);
+      //const res = await axios.get("https://themealdb.com/api/json/v1/1/search.php?s=chicken");
     };
 
     getPost()
@@ -37,19 +47,24 @@ export default function SinglePost() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if(favourited){
-      setFavourited(false);
+    if(user){
+      if(favourited){
+        setFavourited(false);
+      }
+      else{
+        setFavourited(true);
+      }
+
+      const fav = {
+        userId: user._id,
+        recipeId: post.idMeal
+      }
+
+      axios.post("http://localhost:5000/post/add", fav);
     }
     else{
-      setFavourited(true);
+      window.location = '/login';
     }
-
-    const fav = {
-      userId: user._id,
-      recipeId: post.idMeal
-    }
-
-    axios.post("http://localhost:5000/post/add", fav);
   }
 
     return (

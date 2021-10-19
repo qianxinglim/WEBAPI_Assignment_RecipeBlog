@@ -231,31 +231,33 @@ router.post("/:id", async (req, res) => {
   const idMeal = req.params.id;
   const userId = req.body.userId;
 
-  // await axios.get(
-  //   `https://themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`
-  // ).then((response) => {
-  //   res.json(response.data.meals[0]);
-  // }).catch((error) => {
-  //   res.status(500).json(error);
-  // });
+  if(userId){
+    let firstResult = await axios.get(`https://themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`);
 
-  let firstResult = await axios.get(`https://themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`);
-
-  let updatedResult = firstResult.data.meals.map(async item => {
-    const post = await Post.findOne({ userId: userId, recipeId: idMeal});
-      
-      if(post){
-        item.favourited = true;
-      }
-      else{
-        item.favourited = false;
-      }
-
-      return item;
-  });
-
-  Promise.all(updatedResult).then(finalResult => res.json(finalResult[0]));
-
+    let updatedResult = firstResult.data.meals.map(async item => {
+      const post = await Post.findOne({ userId: userId, recipeId: idMeal});
+        
+        if(post){
+          item.favourited = true;
+        }
+        else{
+          item.favourited = false;
+        }
+  
+        return item;
+    });
+  
+    Promise.all(updatedResult).then(finalResult => res.json(finalResult[0]));
+  }
+  else{
+    await axios.get(
+      `https://themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`
+    ).then((response) => {
+      res.json(response.data.meals[0]);
+    }).catch((error) => {
+      res.status(500).json(error);
+    });
+  }
 
   // await axios.get(
   //   "https://themealdb.com/api/json/v1/1/search.php?s=chicken"

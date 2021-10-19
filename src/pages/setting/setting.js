@@ -9,10 +9,13 @@ export default function Setting(){
     const [email, setEmail] = useState("");
     const [oldPassword, setOldPassword] = useState("");
     const [password, setPassword] = useState("");
-    const {user} = useContext(Context);
+    const [success, setSuccess] = useState(false);
+    const {user, dispatch} = useContext(Context);
     
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        dispatch({type:"UPDATE_START"})
         
         const updatedUser = {
             userId: user._id,
@@ -23,9 +26,11 @@ export default function Setting(){
         }
 
         try{
-            await axios.put("http://localhost:5000/user/" + user._id, updatedUser);
+            const res = await axios.put("http://localhost:5000/user/" + user._id, updatedUser);
+            setSuccess(true);
+            dispatch({type:"UPDATE_SUCCESS", payload:res.data})
         }catch(err){
-            
+            dispatch({type:"UPDATE_FAILURE"})
         }
     };
 
@@ -34,7 +39,7 @@ export default function Setting(){
             <div className="settingsWrapper">
                 <div className="settingsTitle">
                 <span className="settingsUpdateTitle">Update Your Account</span>
-                <span className="settingsDeleteTitle">Delete Account</span>
+                {/* <span className="settingsDeleteTitle">Delete Account</span> */}
                 </div>
                 <form className="settingsForm" onSubmit={handleSubmit}>
                     {/* <label>Profile Picture</label>
@@ -63,6 +68,8 @@ export default function Setting(){
                     <button className="settingsSubmit" type="submit">
                         Update
                     </button>
+
+                    {success && (<span style={{color: "green", textAlign:"center", marginTop:"20px"}}>Profile has been updated...</span>)}
                 </form>
             </div>
       <Sidebar />
