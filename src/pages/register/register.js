@@ -7,7 +7,7 @@ export default function Register() {
   const [fullName, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,7 +23,8 @@ export default function Register() {
       res.data && window.location.replace("/login");
     }
     catch(err){
-      setError(true);
+      //setError(true);
+      setError(err.response.data);
     }
   };
 
@@ -44,7 +45,8 @@ export default function Register() {
             Login
           </Link>
         </button> */}
-        {error && <span style={{color:"red", marginTop: "10px"}}>Something went wrong! </span>}
+        {/* {error && <span style={{color:"red", marginTop: "10px"}}>Something went wrong! Please try again later.</span>} */}
+        {error && (<p  style={{color: "red", textAlign:"center", marginTop:"20px"}}>{error}</p>)}
     </div>
     )
 }

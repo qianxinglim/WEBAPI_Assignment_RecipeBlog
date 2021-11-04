@@ -9,6 +9,7 @@ export default function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const {dispatch, isFetching} = useContext(Context);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,6 +23,8 @@ export default function Login() {
       dispatch({type:"LOGIN_SUCCESS", payload: res.data});
     }catch(err){
       dispatch({type:"LOGIN_FAILURE"});
+      console.error(err.response.data);
+      setError(err.response.data);
     }
   };
 
@@ -64,6 +67,8 @@ export default function Login() {
             Register
           </Link>
         </button> */}
+
+      {error && (<p  style={{color: "red", textAlign:"center", marginTop:"20px"}}>{error}</p>)}
     </div>
   );
 }
