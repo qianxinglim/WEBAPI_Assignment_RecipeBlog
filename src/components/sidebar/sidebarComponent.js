@@ -9,14 +9,18 @@ export default function Sidebar() {
   const [areas, setAreas] = useState([]);
   //const [posts, setPosts] = useState([]);
 
+  const axiosInstance = axios.create({
+    baseURL: "http://localhost:5000"
+  });
+
   useEffect(() => {
     const getCats = async() => {
-      const res = await axios.get("/category");
+      const res = await axiosInstance.get("/category");
       setCats(res.data)
     }
 
     const getAreas = async() => {
-      const res = await axios.get("/category/area");
+      const res = await axiosInstance.get("/category/area");
       setAreas(res.data)
     }
 

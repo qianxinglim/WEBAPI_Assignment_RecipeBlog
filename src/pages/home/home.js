@@ -15,7 +15,7 @@ export default function Home (){
 
     const axiosInstance = axios.create({
         baseURL: "http://localhost:5000"
-        });
+    });
 
     useEffect(() => {
         // setError(false);
