@@ -33,13 +33,14 @@ app.use('/category', catRouteUrls);
 
 if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === 'staging') {
     // Express will serve up production assets i.e. main.js
-    app.use(express.static(__dirname + '/client/build'));
+    const publicPath = path.join(__dirname, '..', 'public');
+    app.use(express.static(publicPath));
     // If Express doesn't recognize route serve index.html
-    const path = require('path');
+    //const path = require('path');
     app.get('*', (req, res) => {
-        res.sendFile(
-            path.resolve(__dirname, 'client', 'build', 'index.html')
-        );
+       res.sendFile(
+           path.join(publicPath, 'index.html')
+       );
     });
 }
 
