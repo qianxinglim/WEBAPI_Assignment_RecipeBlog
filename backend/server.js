@@ -31,6 +31,18 @@ app.use('/auth', authRouteUrls);
 app.use('/post', postRouteUrls);
 app.use('/category', catRouteUrls);
 
+if (process.env.NODE_ENV === "production") {
+    const pathToClientBuild = path.join(__dirname, '..', 'path', 'to', 'client', 'build');
+    app.use(express.static(pathToClientBuild));
+
+    /**
+     * experiment with '/' and '/*' and see what works best for you
+    */
+    app.get('/*', function (req, res) {
+      res.sendFile(path.join(pathToClientBuild, 'index.html'));
+    });
+}
+
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
 });
