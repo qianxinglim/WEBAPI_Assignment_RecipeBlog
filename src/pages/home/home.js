@@ -11,15 +11,31 @@ export default function Home (){
     const [posts, setPosts] = useState([]);
     const {search} = useLocation();
     const {user} = useContext(Context);
+    const [error, setError] = useState("");
 
     useEffect(() => {
+        // setError(false);
+
         const fetchPosts = async () => {
             const res = await axios.get("http://localhost:5000/post" + search);
 
             // const res = await axios.post("http://localhost:5000/post",{
             //     userId: user._id,
             // });
-            setPosts(res.data);
+
+            // if(res.data != null){
+            //     if (isEmptyObject(res.data)) {
+            //         setError(true);
+            //         console.error("No result");
+            //     } else {
+            //         setError(false);
+                    setPosts(res.data);
+            //     }
+            // }else{
+            //     setError(true);
+            // }
+
+            
 
             // let firstResult = await axios.get("http://localhost:5000/post" + search);
 
@@ -40,6 +56,10 @@ export default function Home (){
 
         fetchPosts();
     },[search]);
+
+    function isEmptyObject(obj) {
+        return Object.keys(obj).length === 0;
+    }
 
     // constructor(props) {
     //     super(props);
@@ -106,7 +126,9 @@ export default function Home (){
             <>
                 <Header/>
                 <div className="home">
-                    <Posts posts={posts}/>
+                {posts ? (<Posts posts={posts}/>) : (<p className="pclass">No Recipe found.</p>)}
+                {/* {!error ? (<Posts posts={posts}/>) : (<p className="pclass">No Recipe found.</p>)} */}
+                {/* {error && (<p className="pclass">No Recipe found.</p>)} */}
                     <div className="sidebar sidebar-home">
                         <Sidebar/>
                     </div>

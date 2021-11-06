@@ -38,11 +38,14 @@
 
 .sidebarItem > p {
   padding: 30px;
+  /* newly added */
+  padding: 30px 50px 0px 50px;
+  text-align: justify;
 }
 
 .sidebarList {
   list-style: none;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
 
 .sidebarListItem {
