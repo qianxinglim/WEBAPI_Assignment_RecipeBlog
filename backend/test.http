@@ -168,7 +168,7 @@ POST http://localhost:5000/post/favourite
 Content-Type: application/json
 
 {
-    "userId" : "6158561db494b266d1b03aa4"
+    "userId" : "6186bb957cbc7f5386568924"
 }
 
 ###

@@ -11,6 +11,7 @@ export default function Favourite(){
     const [posts, setPosts] = useState([]);
     const {search} = useLocation();
     const {user} = useContext(Context);
+    const [error, setError] = useState("");
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -20,7 +21,13 @@ export default function Favourite(){
 
             //const res = await axios.post("http://localhost:5000/post/favourite");
 
-            setPosts(res.data);
+            if(res.data.length === 0){
+                setError(true);
+            }
+            else{
+                setPosts(res.data);
+            }
+            
         };
 
         fetchPosts();
@@ -30,7 +37,8 @@ export default function Favourite(){
         <>
             <FavHeader/>
             <div className="home">
-                <Posts posts={posts}/>
+                {/* <Posts posts={posts}/> */}
+                {!error ? (<Posts posts={posts}/>) : (<p className="pclass">No favourited recipe.</p>)}
                 <div className="sidebar sidebar-home">
                     <Sidebar/>
                 </div>
