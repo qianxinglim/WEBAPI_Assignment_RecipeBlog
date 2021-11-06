@@ -9,18 +9,14 @@ export default function Sidebar() {
   const [areas, setAreas] = useState([]);
   //const [posts, setPosts] = useState([]);
 
-  const axiosInstance = axios.create({
-    baseURL: "http://localhost:5000"
-  });
-
   useEffect(() => {
     const getCats = async() => {
-      const res = await axiosInstance.get("/category");
+      const res = await axios.get("https://recipeblog-qx.herokuapp.com//category");
       setCats(res.data)
     }
 
     const getAreas = async() => {
-      const res = await axiosInstance.get("/category/area");
+      const res = await axios.get("https://recipeblog-qx.herokuapp.com//category/area");
       setAreas(res.data)
     }
 
