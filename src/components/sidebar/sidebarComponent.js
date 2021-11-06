@@ -11,12 +11,12 @@ export default function Sidebar() {
 
   useEffect(() => {
     const getCats = async() => {
-      const res = await axios.get("http://localhost:5000/category");
+      const res = await axios.get("/category");
       setCats(res.data)
     }
 
     const getAreas = async() => {
-      const res = await axios.get("http://localhost:5000/category/area");
+      const res = await axios.get("/category/area");
       setAreas(res.data)
     }
 
