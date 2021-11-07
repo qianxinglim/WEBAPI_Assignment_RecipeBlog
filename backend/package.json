@@ -5,9 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
-    "server": "nodemon server.js",
-    "client": "npm run start --prefix client",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "server": "nodemon server.js"
   },
   "author": "Qian Xing",
   "license": "ISC",

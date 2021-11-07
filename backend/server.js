@@ -7,7 +7,7 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(express.static(path.join(__dirname, 'client/build')));
+// app.use(express.static(path.join(__dirname, 'client/build')));
 
 //const dotenv = require('dotenv');
 //dotenv.config()
@@ -34,23 +34,23 @@ app.use('/auth', authRouteUrls);
 app.use('/post', postRouteUrls);
 app.use('/category', catRouteUrls);
 
-// if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === 'staging') {
-//     // Express will serve up production assets i.e. main.js
-//     const path = require('path');
-//     const publicPath = path.join(__dirname, 'public');
-//     app.use(express.static(publicPath));
-//     // If Express doesn't recognize route serve index.html
-//     //const path = require('path');
-//     app.get('*', (req, res) => {
-//        res.sendFile(
-//            path.join(publicPath, 'index.html')
-//        );
-//     });
-// }
+if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === 'staging') {
+    // Express will serve up production assets i.e. main.js
+    const path = require('path');
+    const publicPath = path.join(__dirname, 'public');
+    app.use(express.static(publicPath));
+    // If Express doesn't recognize route serve index.html
+    //const path = require('path');
+    app.get('*', (req, res) => {
+       res.sendFile(
+           path.join(publicPath, 'index.html')
+       );
+    });
+}
 
-app.get('*', (req,res) =>{
-    res.sendFile(path.join(__dirname+'/client/build/index.html'));
-  });
+// app.get('*', (req,res) =>{
+//     res.sendFile(path.join(__dirname+'/client/build/index.html'));
+//   });
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
