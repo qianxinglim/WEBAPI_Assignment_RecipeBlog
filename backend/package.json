@@ -5,10 +5,10 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "server": "nodemon backend/server.js",
+    "server": "nodemon server.js",
     "client": "npm start",
-    "heroku-postbuild": "npm install && npm run build",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "npm install && npm run build"
   },
   "author": "Qian Xing",
   "license": "ISC",
