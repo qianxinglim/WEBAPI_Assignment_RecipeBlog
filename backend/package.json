@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
-    "server": "nodemon server.js",
+    "start": "nodemon backend/server.js",
+    "server": "nodemon backend/server.js",
     "client": "npm start",
     "heroku-postbuild": "npm install && npm run build"
   },
