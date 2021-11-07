@@ -17,7 +17,7 @@ export default function Home (){
         // setError(false);
 
         const fetchPosts = async () => {
-            const res = await axios.get("/post" + search); 
+            const res = await axios.get("http://localhost:5000/post" + search); 
 
             // const res = await axios.post("http://localhost:5000/post",{
             //     userId: user._id,
