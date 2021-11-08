@@ -10,7 +10,7 @@ router.put("/:id", async (req, res) => {
     !user && res.status(400).json("User does not exist!");
 
     const validated = await bcrypt.compare(req.body.oldPassword, user.password);
-    !validated && res.status(400).json("Wrong credentials!");
+    !validated && res.status(400).json("Wrong old password!");
 
     if(req.body.oldPassword){
       if(validated){

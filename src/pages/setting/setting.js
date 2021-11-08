@@ -11,6 +11,7 @@ export default function Setting(){
     const [password, setPassword] = useState("");
     const [success, setSuccess] = useState(false);
     const {user, dispatch} = useContext(Context);
+    const [error, setError] = useState("");
     
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -28,9 +29,12 @@ export default function Setting(){
         try{
             const res = await axios.put("http://localhost:5000/user/" + user._id, updatedUser);
             setSuccess(true);
+            setError(false);
             dispatch({type:"UPDATE_SUCCESS", payload:res.data})
         }catch(err){
             dispatch({type:"UPDATE_FAILURE"})
+            setError(err.response.data);
+            setSuccess(false);
         }
     };
 
@@ -70,6 +74,7 @@ export default function Setting(){
                     </button>
 
                     {success && (<span style={{color: "green", textAlign:"center", marginTop:"20px"}}>Profile has been updated...</span>)}
+                    {error && (<p  style={{color: "red", textAlign:"center", marginTop:"20px"}}>{error}</p>)}
                 </form>
             </div>
       <Sidebar />

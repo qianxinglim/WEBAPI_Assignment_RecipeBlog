@@ -16,7 +16,7 @@ export default function Sidebar() {
     }
 
     const getAreas = async() => {
-      const res = await axios.get("backend/category/area");
+      const res = await axios.get("http://localhost:5000/category/area");
       setAreas(res.data)
     }
 
